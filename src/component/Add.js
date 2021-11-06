@@ -4,8 +4,7 @@ import { toast } from 'react-toastify'
 
 function Add() {
     const contact = useSelector(state=>state)
-    console.log(contact);
-    // const dispatch= useDispatch();
+    const dispatch= useDispatch();
 
     const [name,setname]=useState("")
     const [email,setemail]=useState("")
@@ -14,35 +13,36 @@ function Add() {
     const submithandler=(e)=>{
         e.preventDefault();
 
-        // const checkemail = contact.find(
-        //     (item)=>item.email===email && email
-        //     )
-        // const checknum = contact.find(
-        //         (item)=>item.number===parseInt(num) && num)
-        // if (checkemail) {
-        //     toast.error('this email is already existed')
-        // }
-        // if (checknum) {
-        //     toast.error('this number is already existed')
-        // }
+        const checkemail = contact.find(
+            (item)=>item.email===email && email
+            )
+        const checknum = contact.find(
+                (item)=>item.number===num && num)
+        if (checkemail) {
+            toast.error('this email is already existed')
+        }
+        if (checknum) {
+            toast.error('this number is already existed')
+        }
         if (!name || !email || !num) {
             toast.warning('please enter the field')
         }
-        // const data={
-        //     id:contact.length,
-        //     name:name,
-        //     email:email,
-        //     number:num,
-        // }
-        // console.log(data);
+        
 
-        // if (name || email || num || !checknum || !checkemail) {
-        //     toast.success('contact successfully added');
+           
             
-        //     dispatch({type:"ADD_CONTACT",payload:data})
-
-        // }
-    }
+            if (name && email && num && !checknum && !checkemail) {
+                const data={
+                    id:contact.length,
+                    name:name,
+                    email:email,
+                    number:num,
+                }
+                toast.success('contact successfully added'); 
+                dispatch({type:'ADD_CONTACT' , payload:data})
+            }
+            
+}
 
     return (
         <div className="container mt-5">
@@ -76,5 +76,6 @@ function Add() {
         </div>
     )
 }
+
 
 export default Add

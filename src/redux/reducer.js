@@ -1,12 +1,12 @@
-
-const reducer = (state=[],action)=> {
+const is = [];
+const reducer = (state=is,action)=> {
 
         switch(action.type) {
-            // case "ADD_CONTACT":
-            // state=[...state,action.payload]
-            // default:
-            default:
-                return state
+            case "ADD_CONTACT":
+            state=[...state,action.payload];
+            
+
+            default: return state   
                 
         }
 }
