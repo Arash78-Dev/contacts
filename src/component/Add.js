@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-
+import {useNavigate} from 'react-router-dom'
 function Add() {
     const contact = useSelector(state=>state)
     const dispatch= useDispatch();
@@ -10,7 +10,9 @@ function Add() {
     const [email,setemail]=useState("")
     const [num,setnum]=useState("")
 
-    const submithandler=(e)=>{
+    let usenav = useNavigate()
+
+    const Submithandler=(e)=>{
         e.preventDefault();
 
         const checkemail = contact.find(
@@ -27,11 +29,14 @@ function Add() {
         if (!name || !email || !num) {
             toast.warning('please enter the field')
         }
+        if (num.length!==11 || num.substr(0,1)!=='0') {
+            toast.warning('your number is not valid')
+        }
         
-
+        // && num.length===11 && num.substr(0,1)==='0'
            
             
-            if (name && email && num && !checknum && !checkemail) {
+            if (name && email && num && !checknum && !checkemail ) {
                 const data={
                     id:contact.length,
                     name:name,
@@ -40,6 +45,8 @@ function Add() {
                 }
                 toast.success('contact successfully added'); 
                 dispatch({type:'ADD_CONTACT' , payload:data})
+                usenav('/')
+              
             }
             
 }
@@ -51,7 +58,7 @@ function Add() {
                             <h3 className="display-4 text-muted">Add contact</h3>
                 </div>
                 <div className="col-md-6 mx-auto shadow border p-5">
-                        <form onSubmit={submithandler}>
+                        <form onSubmit={Submithandler}>
                             <div className="form-group">
                                 <input type="text" placeholder="name" className="rounded outline-none form-control"
                                 value={name} onChange={(e)=>{setname(e.target.value)}}
